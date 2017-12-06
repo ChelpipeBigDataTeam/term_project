@@ -7,11 +7,15 @@ import numpy as np
 from sklearn import metrics
 from sklearn.model_selection import StratifiedKFold
 from sklearn import preprocessing
-
+from matplotlib import pyplot as plt
 import data_paths as dp
 import titles as tl
 import datasets as dt
 
+
+def save_histogram(predicted, y_test, it):
+    plt.hist([abs(i - j) for i, j in zip(predicted, y_test)])
+    plt.savefig(dp.test_data['err_hist'] + '/fig{}.jpg'.format(str(it)))
 
 def get_titles_lists(dataset_name):
     if dataset_name == 'full harding':
@@ -25,7 +29,7 @@ def get_titles_lists(dataset_name):
     return non_cat_title, cat_title
 
 
-def get_x_y_data(x, y, sample, scaler, cat_title, non_cat_title):
+def get_x_y_data(x, y, sample, scaler, non_cat_title, cat_title):
     sc_data = x.loc[sample, non_cat_title]
     sc_data = pd.DataFrame(scaler.fit_transform(sc_data), index=sc_data.index, columns=sc_data.columns)
     ct_data = x.loc[sample, cat_title]
@@ -53,8 +57,8 @@ def run_model(dataset_name, model, plot, target, n_splits, is_plot=False):
     it = 0
     for train, test in kfold.split(x, y):
         scaler = preprocessing.StandardScaler()
-        x_train, y_train=get_x_y_data(x, y, train, scaler, cat_title, non_cat_title)
-        x_test, y_test = get_x_y_data(x, y, test, scaler, cat_title, non_cat_title)
+        x_train, y_train = get_x_y_data(x, y, train, scaler, non_cat_title, cat_title)
+        x_test, y_test = get_x_y_data(x, y, test, scaler, non_cat_title, cat_title)
         model.fit(x_train.values, y_train)
 
         # Тестирование
@@ -64,8 +68,7 @@ def run_model(dataset_name, model, plot, target, n_splits, is_plot=False):
         cvscores.append(scores)
         print('Corr: {:.2f}\n'.format(np.corrcoef(y_test, predicted)[0][1]))
 
-        # plt.hist([abs(i - j) for i, j in zip(predicted, y_test)])
-        # plt.savefig(dp.test_data['err_hist']+'/fig{}.jpg'.format(str(it)))
+        save_histogram(predicted, y_test, it)
 
         x_test_sc = pd.DataFrame(
             scaler.inverse_transform(x_test[non_cat_title]),
