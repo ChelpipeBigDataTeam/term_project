@@ -65,7 +65,7 @@ def plot(model, x_test, y_test):
 
 def run_gradient_boosting(dataset_name, target, n_splits, is_plot=True, n_trees=n_trees, learning_rate=learning_rate, max_depth=max_depth):
     model = ensemble.GradientBoostingRegressor(n_estimators=n_trees, learning_rate=learning_rate, max_depth=max_depth)
-    mean, std = run_model(dataset_name, model, plot, target, n_splits, is_plot)
+    mean, std = run_model(dataset_name, 'GB', model, plot, target, n_splits, is_plot)
     return mean, std
 
 # sums = np.array([0., 0.])

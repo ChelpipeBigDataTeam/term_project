@@ -46,7 +46,7 @@ def multirun_model(run_model_method_name, it_count, dataset_name, target, n_spli
     print(sums / it_count)
 
 
-def run_model(dataset_name, model, plot, target, n_splits, is_plot=False):
+def run_model(dataset_name, model_name, model, plot, target, n_splits, is_plot=False):
     ns, x, y = dt.get_data(target=target, dataset_name=dataset_name)
 
     # Обучение
@@ -78,7 +78,7 @@ def run_model(dataset_name, model, plot, target, n_splits, is_plot=False):
 
         x_test_sc[target] = y_test
         x_test_sc[target + u'(сеть)'] = predicted
-        x_test_sc.combine_first(pd.DataFrame(ns)).dropna().to_excel(dp.results['svr'] + '/res{}.xlsx'.format(str(it)))
+        x_test_sc.combine_first(pd.DataFrame(ns)).dropna().to_excel(dp.results[model_name] + '/res{}.xlsx'.format(str(it)))
         it += 1
 
         if is_plot:

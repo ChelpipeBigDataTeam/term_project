@@ -32,7 +32,7 @@ def plot(model, x_test, y_test):
 
 def run_linear_regression(dataset_name, target, n_splits, is_plot=True):
    model = linear_model.LinearRegression()
-   mean, std = run_model(dataset_name, model, plot, target, n_splits, is_plot)
+   mean, std = run_model(dataset_name, 'LM', model, plot, target, n_splits, is_plot)
    return mean, std
 
 multirun_model(run_linear_regression, it_count,

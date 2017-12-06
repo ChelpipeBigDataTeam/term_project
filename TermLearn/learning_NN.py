@@ -85,7 +85,7 @@ def run_nn(dataset_name, target, n_splits, is_plot=False, batch_size=batch_size,
         x_test_sc[target] = y_test
         x_test_sc[target + u'(сеть)'] = predicted
         x_test_sc.combine_first(pd.DataFrame(ns)).dropna().to_excel(
-            dp.test_data['learn_nn'] + '/res{}.xlsx'.format(str(it)))
+            dp.results['NN'] + '/res{}.xlsx'.format(str(it)))
         it += 1
 
     print("%.2f (+/- %.2f)" % (np.mean(cvscores), np.std(cvscores)))

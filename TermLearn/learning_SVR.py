@@ -28,7 +28,7 @@ def plot(model, x_test):
 
 def run_SVR(dataset_name, target, n_splits, is_plot=False, C=C):
     model = svm.SVR(C=C)
-    mean, std = run_model(dataset_name, model, plot, target, n_splits, is_plot)
+    mean, std = run_model(dataset_name, 'SVR', model, plot, target, n_splits, is_plot)
     return mean, std
 
 multirun_model(run_SVR, it_count,

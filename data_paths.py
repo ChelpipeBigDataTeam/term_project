@@ -181,8 +181,10 @@ test_data = {
 }
 
 results = {
-    'svr': main_folder_name+'/tmp/results/test_SVR',
-    'gradient_boosting': main_folder_name+'/tmp/results/test_gradient_boosting'
+    'SVR': main_folder_name+'/tmp/results/test_SVR',
+    'GB': main_folder_name+'/tmp/results/test_gradient_boosting',
+    'NN': main_folder_name+'/tmp/results/test_NN',
+    'LM': main_folder_name+'/tmp/results/test_LM'
 }
 
 if __name__ == '__main__':
