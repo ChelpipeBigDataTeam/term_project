@@ -4,6 +4,8 @@
 """
 main_folder_name = "../../Data"
 
+check_py_charm_VCS = {}
+
 raw_data_1 = {
     'path': main_folder_name+'/raw/raw_data_1.xls',
     'sheets': ['2013', '2014', '2015', '2016', '2017', '369'],
