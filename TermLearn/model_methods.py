@@ -13,6 +13,18 @@ import titles as tl
 import datasets as dt
 
 
+def get_titles_lists(dataset_name):
+    if dataset_name == 'full harding':
+        non_cat_title = tl.full_hard_non_cat_title
+        cat_title = tl.full_hard_cat_title
+    elif dataset_name == 'double harding':
+        non_cat_title = tl.double_hard_non_cat_title
+        cat_title = tl.double_hard_cat_title
+    else:
+        raise ValueError
+    return non_cat_title, cat_title
+
+
 def get_x_y_data(x, y, sample, scaler, cat_title, non_cat_title):
     sc_data = x.loc[sample, non_cat_title]
     sc_data = pd.DataFrame(scaler.fit_transform(sc_data), index=sc_data.index, columns=sc_data.columns)
@@ -37,33 +49,12 @@ def run_model(dataset_name, model, plot, target, n_splits, is_plot=False):
     kfold = StratifiedKFold(n_splits=n_splits, shuffle=True)
     cvscores = []
 
-    if dataset_name == 'full harding':
-        non_cat_title = tl.full_hard_non_cat_title
-        cat_title = tl.full_hard_cat_title
-    elif dataset_name == 'double harding':
-        non_cat_title = tl.double_hard_non_cat_title
-        cat_title = tl.double_hard_cat_title
-    else:
-        raise ValueError
-
+    cat_title, non_cat_title = get_titles_lists(dataset_name)
     it = 0
     for train, test in kfold.split(x, y):
         scaler = preprocessing.StandardScaler()
-
-        # sc_data = x.loc[train, non_cat_title]
-        # sc_data = pd.DataFrame(scaler.fit_transform(sc_data), index=sc_data.index, columns=sc_data.columns)
-        # ct_data = x.loc[train, cat_title]
-        # x_train = pd.concat([sc_data, ct_data], axis=1)
-        # y_train = y[train].values
-
         x_train, y_train=get_x_y_data(x, y, train, scaler, cat_title, non_cat_title)
         x_test, y_test = get_x_y_data(x, y, test, scaler, cat_title, non_cat_title)
-        # sc_data = x.loc[test, non_cat_title]
-        # sc_data = pd.DataFrame(scaler.transform(sc_data), index=sc_data.index, columns=sc_data.columns)
-        # ct_data = x.loc[test, cat_title]
-        # x_test = pd.concat([sc_data, ct_data], axis=1)
-        # y_test = y[test].values
-
         model.fit(x_train.values, y_train)
 
         # Тестирование

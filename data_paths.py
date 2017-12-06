@@ -3,9 +3,6 @@
 Описание путей к файлам данных проекта
 """
 main_folder_name = "../../Data"
-uytjthkjgt
-
-check_py_charm_VCS = {}
 
 raw_data_1 = {
     'path': main_folder_name+'/raw/raw_data_1.xls',

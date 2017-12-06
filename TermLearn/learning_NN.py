@@ -15,7 +15,7 @@ from matplotlib import pyplot as plt
 from sklearn.model_selection import StratifiedKFold
 from sklearn import preprocessing
 from keras.callbacks import History
-from learning_another_logic import multirun_model
+from model_methods import multirun_model
 
 # Параметры обучения
 batch_size = 32

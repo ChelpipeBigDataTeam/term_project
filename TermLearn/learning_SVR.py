@@ -4,7 +4,7 @@
 """
 
 from sklearn import svm
-from learning_another_logic import run_model, multirun_model
+from model_methods import run_model, multirun_model
 
 # Переменные для подсчета средних по запускам
 it_mean_err = []

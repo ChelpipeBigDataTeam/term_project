@@ -5,7 +5,7 @@
 
 import numpy as np
 from sklearn import ensemble
-from learning_another_logic import run_model, multirun_model
+from model_methods import run_model, multirun_model
 from matplotlib import pyplot as plt
 
 # Переменные для подсчета средних по запускам
