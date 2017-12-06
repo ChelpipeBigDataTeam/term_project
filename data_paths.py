@@ -3,6 +3,7 @@
 Описание путей к файлам данных проекта
 """
 main_folder_name = "../../Data"
+uytjthkjgt
 
 check_py_charm_VCS = {}
 
