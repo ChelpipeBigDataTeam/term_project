@@ -10,7 +10,7 @@ import data_paths as dp
 from titles import *
 
 
-def create_cleaned_datafile(raw_data, title_list, sheet_name, n_begin, n_end, result_path):
+def create_cleaned_datafile(raw_data, title_list, sheet_name, n_begin, n_end, result_path, mark):
     """
     Создание и сохранение данных из исходных таблиц в виде, удобном для работы в формате pandas.DataFrame
     :param raw_data: DataFrame с исходными данными
@@ -28,7 +28,7 @@ def create_cleaned_datafile(raw_data, title_list, sheet_name, n_begin, n_end, re
             data.loc[r, u'№ партии'] = data.loc[r - 1, u'№ партии']
             data.loc[r, u'темп-ра терм. (норм.)':u'ОКБ (отпуск)'] = \
                 data.loc[r - 1, u'темп-ра терм. (норм.)':u'ОКБ (отпуск)']
-    data[u'№ партии'] = data[u'№ партии'].apply(lambda x: unicode(x) + sheet_name)
+    data[u'№ партии'] = data[u'№ партии'].apply(lambda x: unicode(x) + sheet_name + mark)
     data.index = pd.Series(range(data.shape[0]))
     data.to_excel(result_path)
     print('Файл {} записан'.format(result_path))
@@ -41,28 +41,32 @@ full_data = []
 raw_data_1 = pd.read_excel(dp.raw_data_1['path'], sheetname=None)
 
 for sheet, borders in zip(dp.raw_data_1['sheets'], dp.raw_data_1['borders']):
-    df = create_cleaned_datafile(raw_data_1, rus_title_1, sheet, borders[0], borders[1], dp.prepared_data['1'][sheet])
+    df = create_cleaned_datafile(raw_data_1, rus_title_1, sheet, borders[0], borders[1],
+                                 dp.prepared_data['1'][sheet], '')
     full_data.append(df)
 
 # Загружаем второй файл
 raw_data_2 = pd.read_excel(dp.raw_data_2['path'], sheetname=None)
 
 for sheet, borders in zip(dp.raw_data_2['sheets'], dp.raw_data_2['borders']):
-    df = create_cleaned_datafile(raw_data_2, rus_title_2, sheet, borders[0], borders[1], dp.prepared_data['2'][sheet])
+    df = create_cleaned_datafile(raw_data_2, rus_title_2, sheet, borders[0], borders[1],
+                                 dp.prepared_data['2'][sheet], '')
     full_data.append(df)
 
 # Загружаем третий файл
 raw_data_3 = pd.read_excel(dp.raw_data_3['path'], sheetname=None)
 
 for sheet, borders in zip(dp.raw_data_3['sheets'], dp.raw_data_3['borders']):
-    df = create_cleaned_datafile(raw_data_3, rus_title_3, sheet, borders[0], borders[1], dp.prepared_data['3'][sheet])
+    df = create_cleaned_datafile(raw_data_3, rus_title_3, sheet, borders[0], borders[1],
+                                 dp.prepared_data['3'][sheet], u'ц440')
     full_data.append(df)
 
 # Загружаем четвертый файл
 raw_data_4 = pd.read_excel(dp.raw_data_4['path'], sheetname=None)
 
 for sheet, borders in zip(dp.raw_data_4['sheets'], dp.raw_data_4['borders']):
-    df = create_cleaned_datafile(raw_data_4, rus_title_3, sheet, borders[0], borders[1], dp.prepared_data['4'][sheet])
+    df = create_cleaned_datafile(raw_data_4, rus_title_3, sheet, borders[0], borders[1],
+                                 dp.prepared_data['4'][sheet], u'низ')
     full_data.append(df)
 
 # Создаем слитую таблицу
